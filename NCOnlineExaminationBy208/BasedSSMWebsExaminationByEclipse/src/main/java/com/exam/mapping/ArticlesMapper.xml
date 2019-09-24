@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 用xml去实现那个接口 -->
+
+<mapper namespace="com.exam.dao.IArticlesDao">
+
+	<!-- insert update delete这种语句 -->
+	<insert id="add" parameterType="com.exam.model.Articles" >
+		<!-- 写sql语句 -->
+		insert into Articles(title, content) values(#{title}, #{content})
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.Integer" >
+		<!-- 写sql语句 -->
+		delete from Articles where articleId = #{1}
+	</delete>
+	
+	<update id="update" parameterType="com.exam.model.Articles" >
+		<!-- 写sql语句 -->
+		update Articles set title=#{title}, content=#{content} where articleId = #{articleId}
+	</update>
+	
+	<!-- List<Articles> -->
+	<resultMap id="ArticleMap" type="com.exam.model.Articles" >
+	    <!-- id 此外代表主键字段 column表示数据库字段名  property表示实体类中的属性名 -->
+	    <id column="articleId" property="articleId"/>
+	    <result column="title" property="title"/>
+	    <result column="content" property="content"/>
+  	</resultMap>
+	<!-- select -->
+	<select id="findAll" resultMap="ArticleMap" >
+		select * from Articles
+	</select>
+	
+	<select id="findById" parameterType="java.lang.Integer" resultType="com.exam.model.Articles">
+		select * from Articles where articleId = #{1}
+	</select>
+	
+	<!-- 执行所有语句 <sql></sql>-->
+	
+
+</mapper>
